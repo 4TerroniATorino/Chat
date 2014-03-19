@@ -12,5 +12,6 @@
 	<classpathentry kind="lib" path="libs/gcm.jar"/>
 	<classpathentry kind="lib" path="libs/gson-2.2.2.jar"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/Michele/Desktop/cordova-android/bin/myapp3/CordovaLib/bin/myapp3-cordovalib.jar" sourcepath="/myapp3-CordovaLib/src"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
