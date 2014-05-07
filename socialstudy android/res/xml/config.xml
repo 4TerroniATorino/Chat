@@ -33,9 +33,13 @@
     <access origin="*"/>
 
     <!-- <content src="http://mysite.com/myapp.html" /> for external pages -->
-    <content src="https://studisocial.appspot.com/" />
+<!--     <content src="https://studisocial.appspot.com/" /> -->
+<!-- 	<content src="http://socialstudy-oneiros.rhcloud.com/StudiSocial-war/" /> -->
 
     <preference name="loglevel" value="DEBUG" />
+    <preference name="Orientation" value="landscape" />
+	<preference name="ShowTitle" value="true"/>
+    
     <!--
       <preference name="splashscreen" value="resourceName" />
       <preference name="backgroundColor" value="0xFFF" />
@@ -44,7 +48,7 @@
       <preference name="disallowOverscroll" value="true" />
     -->
     <!-- This is required for native Android hooks -->
-    <feature name="App">
-        <param name="android-package" value="org.apache.cordova.App" />
+    <feature name="avviaActivity">
+        <param name="android-package" value="socialstudy.android.avviaActivity" />
     </feature>
 </widget>

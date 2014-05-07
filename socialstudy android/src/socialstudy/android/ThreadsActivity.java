@@ -38,7 +38,10 @@ public class ThreadsActivity extends FragmentActivity implements LoaderManager.L
 			// Termina l'attività corrente.
 			finish();
 			// Non registrato, lancia l'attività di registrazione.
-			startActivity(new Intent(this, RegistrationActivity.class));
+			Bundle bundle = getIntent().getExtras();
+			Intent intent = new Intent(this, RegistrationActivity.class);
+			intent.putExtra("phone_number", bundle.getString("phone_number"));
+			startActivityForResult(intent, 200);
 			// Esce dal metodo.
 			return;
 		}

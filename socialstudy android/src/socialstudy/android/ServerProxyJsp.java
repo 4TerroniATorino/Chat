@@ -21,22 +21,25 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 
-public class ServerProxy {
+import android.util.Log;
+
+public class ServerProxyJsp {
 
 	static {
 		TrustManager[] trustAllCerts = new TrustManager[] {
 				new X509TrustManager() {
+					@Override
 					public java.security.cert.X509Certificate[] getAcceptedIssuers() {
 						return null;
 					}
 
+					@Override
 					public void checkClientTrusted(X509Certificate[] certs, String authType) {
 					}
 
+					@Override
 					public void checkServerTrusted(X509Certificate[] certs, String authType) {
 					}
 				}
@@ -48,6 +51,7 @@ public class ServerProxy {
 		} catch (Throwable t) {
 		}
 		HostnameVerifier allHostsValid = new HostnameVerifier() {
+			@Override
 			public boolean verify(String hostname, SSLSession session) {
 				return true;
 			}
@@ -112,7 +116,7 @@ public class ServerProxy {
 		params.put("phone_number", phoneNumber);
 		params.put("device_type", "Android");
 		params.put("device_id", deviceId);
-		RegisterResponse response = call(serverBaseUrl, "register.php", params, RegisterResponse.class);
+		RegisterResponse response = call(serverBaseUrl, "register.jsp", params, RegisterResponse.class);
 		if (response.code != 0) {
 			throw new IOException("errore server: " + response.code + " " + response.description);
 		}
@@ -128,7 +132,7 @@ public class ServerProxy {
 		params.put("phone_number", senderPhoneNumber);
 		params.put("recipient", recipientPhoneNumber);
 		params.put("message", message);
-		SendResponse response = call(serverBaseUrl, "send.php", params, SendResponse.class);
+		SendResponse response = call(serverBaseUrl, "send.jsp", params, SendResponse.class);
 		if (response.code == 4) {
 			throw new UnknownRecipientException();
 		}
@@ -141,7 +145,7 @@ public class ServerProxy {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("private_key", privateKey);
 		params.put("phone_number", phoneNumber);
-		RetrieveResponse response = call(serverBaseUrl, "retrieve.php", params, RetrieveResponse.class);
+		RetrieveResponse response = call(serverBaseUrl, "retrieve.jsp", params, RetrieveResponse.class);
 		if (response.code != 0) {
 			throw new IOException("errore server: " + response.code + " " + response.description);
 		}
@@ -159,7 +163,7 @@ public class ServerProxy {
 			try {
 				ret[i].sentTimestamp = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss Z", Locale.US).parse(response.result.messages[i].ts_sent).getTime();
 			} catch (Exception e) {
-				Log.w("freem", "formato timestamp non valido in " + response.result.messages[i].ts_sent, e);
+				Log.w("social study", "formato timestamp non valido in " + response.result.messages[i].ts_sent, e);
 				ret[i].sentTimestamp = System.currentTimeMillis();
 			}
 		}

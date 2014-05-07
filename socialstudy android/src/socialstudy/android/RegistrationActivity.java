@@ -29,6 +29,9 @@ public class RegistrationActivity extends Activity {
 	private EditText mServerAddress;
 
 	private EditText mPhoneNumber;
+	
+	private String phoneNumber;
+	private String serverAddress;
 
 	private Button mRegister;
 
@@ -36,35 +39,41 @@ public class RegistrationActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		//controlla numero sim
-		TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-		String currentSimNumber = telephonyManager.getLine1Number();
-		setContentView(R.layout.activity_registration);
-		mServerAddress = (EditText) findViewById(R.id.server_address);
-		mPhoneNumber = (EditText) findViewById(R.id.phone_number);
-		mRegister = (Button) findViewById(R.id.register);
-		mServerAddress.setText(Config.SERVER_DEFAULT_BASE_URL);
-		if (currentSimNumber != null && currentSimNumber.length() > 0) {
-			if (!currentSimNumber.startsWith("+")) {
-				currentSimNumber = "+" + Utils.resolveCurrentICC(this);
-			}
-			mPhoneNumber.setText(currentSimNumber);
-		} 
-		//se non  possibile dalla sim...setta solo il prefisso nazioanle
-		else {
-			mPhoneNumber.setText("+" + Utils.resolveCurrentICC(this));
-		}
-		mRegister.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				registerAsync();
-			}
-		});
+		Bundle bundle = getIntent().getExtras();
+		phoneNumber = "+"+Utils.resolveCurrentICC(this)+bundle.getString("phone_number");
+		serverAddress = Config.SERVER_DEFAULT_BASE_URL;
+		
+//		//controlla numero sim
+//		TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+//		String currentSimNumber = telephonyManager.getLine1Number();
+//		setContentView(R.layout.activity_registration);
+//		mServerAddress = (EditText) findViewById(R.id.server_address);
+//		mPhoneNumber = (EditText) findViewById(R.id.phone_number);
+//		mRegister = (Button) findViewById(R.id.register);
+//		mServerAddress.setText(Config.SERVER_DEFAULT_BASE_URL);
+//		if (currentSimNumber != null && currentSimNumber.length() > 0) {
+//			if (!currentSimNumber.startsWith("+")) {
+//				currentSimNumber = "+" + Utils.resolveCurrentICC(this);
+//			}
+//			mPhoneNumber.setText(currentSimNumber);
+//		} 
+//		//se non e' possibile dalla sim...setta solo il prefisso nazioanle
+//		else {
+//			mPhoneNumber.setText("+" + Utils.resolveCurrentICC(this));
+//		}
+//		mRegister.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				registerAsync();
+//			}
+//		});
+		
+		registerAsync();
 	}
 
 	private void registerAsync() {
 		// Recupera i dati e li valida.
-		String serverAddress = mServerAddress.getText().toString().trim();
+//		String serverAddress = mServerAddress.getText().toString().trim();
 		if (serverAddress.length() == 0) {
 			Toast.makeText(this, getString(R.string.registration_toast_missing_server_address), Toast.LENGTH_SHORT).show();
 			return;
@@ -79,7 +88,7 @@ public class RegistrationActivity extends Activity {
 			Toast.makeText(this, getString(R.string.registration_toast_invalid_server_address), Toast.LENGTH_SHORT).show();
 			return;
 		}
-		final String phoneNumber = mPhoneNumber.getText().toString().trim();
+//		final String phoneNumber = mPhoneNumber.getText().toString().trim();
 		if (phoneNumber.length() == 0) {
 			Toast.makeText(this, getString(R.string.registration_toast_missing_phone_number), Toast.LENGTH_SHORT).show();
 			return;

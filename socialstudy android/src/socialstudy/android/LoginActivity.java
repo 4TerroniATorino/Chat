@@ -11,15 +11,17 @@ public class LoginActivity extends CordovaActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		 super.onCreate(savedInstanceState);
 		 
-//		 setContentView(R.layout.login);
-//		 WebView wv = (WebView) findViewById(R.id.webView1);
+		 setContentView(R.layout.login);
+		 CordovaWebView wv = (CordovaWebView) findViewById(R.id.mainView);
 //		 wv.loadUrl("https://studisocial.appspot.com/");
+		 wv.loadUrl("http://socialstudy-oneiros.rhcloud.com/StudiSocial-war/");
+//		 wv.loadUrl("file:///android_asset/www/index.html");
 		 
-	        super.init();
+//	        super.init();
 	         //Set by <content src="index.html" /> in config.xml
 	        //super.loadUrl(Config.getStartUrl());
 	        
-	        super.loadUrl("https://studisocial.appspot.com/");
+//	        super.loadUrl("https://studisocial.appspot.com/");
 
 		
 	}
