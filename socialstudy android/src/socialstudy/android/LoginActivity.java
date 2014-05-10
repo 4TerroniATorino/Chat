@@ -13,6 +13,7 @@ public class LoginActivity extends CordovaActivity {
 		 
 		 setContentView(R.layout.login);
 		 CordovaWebView wv = (CordovaWebView) findViewById(R.id.mainView);
+		 wv.getSettings().setUserAgentString("mobileSocialStudy");
 //		 wv.loadUrl("https://studisocial.appspot.com/");
 		 wv.loadUrl("http://socialstudy-oneiros.rhcloud.com/StudiSocial-war/");
 //		 wv.loadUrl("file:///android_asset/www/index.html");
