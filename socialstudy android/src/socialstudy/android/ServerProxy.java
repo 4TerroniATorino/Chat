@@ -2,6 +2,7 @@ package socialstudy.android;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -60,8 +61,9 @@ public class ServerProxy {
 		URL url = new URL(serverBaseUrl, endpoint);
 		BufferedWriter writer = null;
 		BufferedReader reader = null;
+		HttpURLConnection connection = null;
 		try {
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("POST");
 			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 			connection.setConnectTimeout(10000);
@@ -90,7 +92,8 @@ public class ServerProxy {
 			response = gson.fromJson(reader, responseClass);
 			reader.close();
 			reader = null;
-		} finally {
+		}
+		finally {
 			if (writer != null) {
 				try {
 					writer.close();
@@ -112,7 +115,8 @@ public class ServerProxy {
 		params.put("phone_number", phoneNumber);
 		params.put("device_type", "Android");
 		params.put("device_id", deviceId);
-		RegisterResponse response = call(serverBaseUrl, "register.php", params, RegisterResponse.class);
+		RegisterResponse response = call(serverBaseUrl, "MobileRegister", params, RegisterResponse.class);
+		System.out.println(phoneNumber);
 		if (response.code != 0) {
 			throw new IOException("errore server: " + response.code + " " + response.description);
 		}
@@ -128,7 +132,7 @@ public class ServerProxy {
 		params.put("phone_number", senderPhoneNumber);
 		params.put("recipient", recipientPhoneNumber);
 		params.put("message", message);
-		SendResponse response = call(serverBaseUrl, "send.php", params, SendResponse.class);
+		SendResponse response = call(serverBaseUrl, "MobileSend", params, SendResponse.class);
 		if (response.code == 4) {
 			throw new UnknownRecipientException();
 		}
@@ -141,7 +145,7 @@ public class ServerProxy {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("private_key", privateKey);
 		params.put("phone_number", phoneNumber);
-		RetrieveResponse response = call(serverBaseUrl, "retrieve.php", params, RetrieveResponse.class);
+		RetrieveResponse response = call(serverBaseUrl, "MobileRetrieve", params, RetrieveResponse.class);
 		if (response.code != 0) {
 			throw new IOException("errore server: " + response.code + " " + response.description);
 		}

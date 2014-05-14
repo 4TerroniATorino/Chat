@@ -51,4 +51,7 @@
     <feature name="avviaActivity">
         <param name="android-package" value="socialstudy.android.avviaActivity" />
     </feature>
+    <feature name="Device">
+    <param name="android-package" value="org.apache.cordova.device.Device" />
+	</feature>
 </widget>

@@ -40,7 +40,7 @@ public class RegistrationActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		Bundle bundle = getIntent().getExtras();
-		phoneNumber = "+"+Utils.resolveCurrentICC(this)+bundle.getString("phone_number");
+		phoneNumber = "+"+bundle.getString("phone_number");
 		serverAddress = Config.SERVER_DEFAULT_BASE_URL;
 		
 //		//controlla numero sim
@@ -93,7 +93,7 @@ public class RegistrationActivity extends Activity {
 			Toast.makeText(this, getString(R.string.registration_toast_missing_phone_number), Toast.LENGTH_SHORT).show();
 			return;
 		}
-		if (!Pattern.matches("^\\+\\d{5,19}$", phoneNumber)) {
+		if (!Pattern.matches("^[0-9\\-\\+]{9,15}$", phoneNumber)) {
 			Toast.makeText(this, getString(R.string.registration_toast_invalid_phone_number), Toast.LENGTH_SHORT).show();
 			return;
 		}
