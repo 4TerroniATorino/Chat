@@ -72,6 +72,7 @@ public class ServerProxy {
 			connection.setDoInput(true);
 			connection.setDoOutput(true);
 			// Invia i parametri attraverso il writer.
+			
 			writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
 			int paramCounter = 0;
 			for (Map.Entry<String, String> entry : params.entrySet()) {
@@ -89,7 +90,13 @@ public class ServerProxy {
 			// Legge la risposta del server.
 			reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			Gson gson = new Gson();
-			response = gson.fromJson(reader, responseClass);
+			StringBuilder builder = new StringBuilder();
+			String aux = "";
+			while((aux = reader.readLine()) != null)
+				builder.append(aux);
+			System.out.println("AAAAAAAAAAAAAAAAAAAAAAAA "+builder.toString());
+			
+			response = gson.fromJson(builder.toString(), responseClass);
 			reader.close();
 			reader = null;
 		}
