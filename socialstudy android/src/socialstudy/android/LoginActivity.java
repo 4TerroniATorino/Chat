@@ -3,6 +3,7 @@ package socialstudy.android;
 import org.apache.cordova.*;
 
 import android.os.Bundle;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 public class LoginActivity extends CordovaActivity {
